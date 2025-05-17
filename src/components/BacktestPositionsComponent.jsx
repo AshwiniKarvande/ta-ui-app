@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import axiosBaseUrl from './AxiosConfig';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-const BacktestPositionsComponent = ({symbol}) => {
+const BacktestPositionsComponent = ({symbol, exchange}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const BacktestPositionsComponent = ({symbol}) => {
   useEffect(() => {
       // Make GET request to fetch data
       axiosBaseUrl
-          .get("/stocks/" + symbol + "/backtest/positions")
+          .get("/stocks/" + symbol + "/backtest/positions?exchange=" + exchange)
           .then((response) => {
               setData(response.data);
               setLoading(false);
@@ -37,7 +37,7 @@ const BacktestPositionsComponent = ({symbol}) => {
 
   return (
     <div className='container'>
-        <h2 className='text-center'>{symbol} backtest positions</h2>
+        <h2 className='text-center'>Position Details: {symbol}</h2>
         <Table striped bordered hover>
             <thead>
                 <tr>

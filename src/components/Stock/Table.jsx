@@ -22,7 +22,7 @@ const Table = ({ stocks, handleEdit, handleDelete }) => {
               <tr key={stock.id}>
                 <td>{i + 1}</td>
                 <td>
-                  <Link to={`/symbols/${stock.symbol}`}>
+                  <Link to={`/symbols/${stock.symbol}?exchange=${stock.exchange}`}>
                     {stock.symbol}
                   </Link>
                 </td>

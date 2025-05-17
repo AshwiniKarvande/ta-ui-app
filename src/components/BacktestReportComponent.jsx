@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Table from 'react-bootstrap/Table';
 import axiosBaseUrl from './AxiosConfig';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-const SymbolReportComponent = ({symbol}) => {
+const SymbolReportComponent = ({symbol, exchange}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +10,7 @@ const SymbolReportComponent = ({symbol}) => {
   useEffect(() => {
       // Make GET request to fetch data
       axiosBaseUrl
-          .get("/stocks/" + symbol + "/backtest/report")
+          .get("/stocks/" + symbol + "/backtest/report?exchange=" + exchange)
           .then((response) => {
               setData(response.data);
               setLoading(false);
@@ -37,7 +36,7 @@ const SymbolReportComponent = ({symbol}) => {
 
   return (
     <div className='container'>
-        <h2 className='text-center'>{symbol} backtest report</h2>
+        <h2 className='text-center'>Strategy Report: {symbol}</h2>
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -57,7 +56,7 @@ const SymbolReportComponent = ({symbol}) => {
                     <tr key={it.strategyName + '-Fresh'}>
                         <td rowSpan="2">{it.strategyName}</td>
                         <td>Fresh</td>
-                        <td>{it.freshPositionCount}</td>
+                        <td style={backgroundColor(it.freshPositionCount + 8)}>{it.freshPositionCount}</td>
                         <td>{it.freshPositionGain}</td>
                         <td>{it.freshPositionDays}</td>
                         <td style={backgroundColor(it.freshPositionCagr)}>{it.freshPositionCagr}</td>
@@ -65,7 +64,7 @@ const SymbolReportComponent = ({symbol}) => {
                     </tr>
                     <tr key={it.strategyName + '-Avg'}>
                         <td>Avg</td>
-                        <td>{it.avgPositionCount}</td>
+                        <td style={backgroundColor(it.avgPositionCount + 8)}>{it.avgPositionCount}</td>
                         <td>{it.avgPositionGain}</td>
                         <td>{it.avgPositionDays}</td>
                         <td style={backgroundColor(it.avgPositionCagr)}>{it.avgPositionCagr}</td>

@@ -43,6 +43,10 @@ const Stock = () => {
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
+      customClass: {
+        confirmButton: 'btn btn-primary btn-lg mr-2',
+        cancelButton: 'btn btn-danger btn-lg',
+      },
     }).then(result => {
       if (result.value) {
         const [stock] = stocks.filter(stock => stock.id === id);

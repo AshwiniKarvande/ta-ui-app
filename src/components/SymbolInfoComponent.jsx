@@ -39,7 +39,7 @@ const SymbolInfoComponent = () => {
                 {
                 data.map(it => 
                     <tr key={it.id}>
-                        <td><Link to={`/symbols/${it.symbol}`}>
+                        <td><Link to={`/symbols/${it.symbol}?exchange=${it.exchange}`}>
                                 {it.symbol}
                             </Link></td>
                         <td>{it.labels.join(', ')}</td>
