@@ -37,6 +37,13 @@ const SymbolReportComponent = ({symbol, exchange}) => {
   return (
     <div className='container'>
         <h2 className='text-center'>Strategy Report: {symbol}</h2>
+        {data.strategyReportList.length === 0 ?
+        <div className='text-center'>No data available</div> :
+        <div className="row">
+          <div className='col-md-6 text-left'><b>From Date:</b>{data.metadata.fromDate} <b>To Date:</b> {data.metadata.toDate}</div>
+          <div className='col-md-6 text-right'>From Price: {data.metadata.fromDateClosePrice} To Price: {data.metadata.toDateClosePrice}</div>
+        </div>
+        }
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -51,9 +58,9 @@ const SymbolReportComponent = ({symbol, exchange}) => {
             </thead>
             <tbody>
                 {
-                data.map(it => 
+                data.strategyReportList.map((it, i) => 
                     <>
-                    <tr key={it.strategyName + '-Fresh'}>
+                    <tr key={i + '-Fresh'}>
                         <td rowSpan="2">{it.strategyName}</td>
                         <td>Fresh</td>
                         <td style={backgroundColor(it.freshPositionCount + 8)}>{it.freshPositionCount}</td>
@@ -62,7 +69,7 @@ const SymbolReportComponent = ({symbol, exchange}) => {
                         <td style={backgroundColor(it.freshPositionCagr)}>{it.freshPositionCagr}</td>
                         <td>{it.freshOpenPosUnrealizedReturn === 0.0 ? '-' : it.freshOpenPosUnrealizedReturn}</td>
                     </tr>
-                    <tr key={it.strategyName + '-Avg'}>
+                    <tr key={i + '-Avg'}>
                         <td>Avg</td>
                         <td style={backgroundColor(it.avgPositionCount + 8)}>{it.avgPositionCount}</td>
                         <td>{it.avgPositionGain}</td>

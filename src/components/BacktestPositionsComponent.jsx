@@ -55,13 +55,13 @@ const BacktestPositionsComponent = ({symbol, exchange}) => {
             </thead>
             <tbody>
                 {
-                data.map(it => 
-                    <tr key={it.strategyName + it.buyPrice + it.sellPrice}>
+                data.map((it, i) => 
+                    <tr key={i}>
                         <td>{it.strategyName}</td>
                         <td>{it.buyDate}</td>
                         <td>{it.buyPrice}</td>
-                        <td>{it.sellPrice}</td>
                         <td>{it.sellDate}</td>
+                        <td>{it.sellPrice}</td>
                         <td>{it.tradingDays}</td>
                         <td>{it.totalDays}</td>
                         <td>{it.gain}</td>

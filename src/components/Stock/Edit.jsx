@@ -36,24 +36,31 @@ const Edit = ({ stocks, selectedStock, setStocks, setIsEditing }) => {
         break;
       }
     }
-
     axiosBaseUrl.put(`/stocks/${id}`, stock)
       .then(response => {
         console.log('Stock updated successfully:', response.data);
+        
+        // Update the stocks state with the new stock data
+        setStocks(stocks);
+        Swal.fire({ 
+          icon: 'success',
+          title: 'Updated!',
+          text: `${stock.exchange}:${stock.symbol}'s data has been updated.`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch(error => {
         console.error('Error updating stock:', error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: 'Duplicate stock data?'
+        });
       });
-    setStocks(stocks);
-    setIsEditing(false);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Updated!',
-      text: `${stock.exchange}:${stock.symbol}'s data has been updated.`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    
+      setIsEditing(false);    
   };
 
     const tsvBhavdataPlaceholder = 
