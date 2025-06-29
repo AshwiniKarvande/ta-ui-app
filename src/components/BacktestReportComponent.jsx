@@ -57,7 +57,7 @@ const SymbolReportComponent = ({symbol, exchange}) => {
                 </tr>
             </thead>
             <tbody>
-                {
+                {   
                 data.strategyReportList.map((it, i) => 
                     <>
                     <tr key={i + '-Fresh'}>
