@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react'
 import Table from 'react-bootstrap/Table';
 import axiosBaseUrl from './AxiosConfig';
 import { Link } from 'react-router-dom';
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import SliderHighLow52Week from './SliderHighLow52Week';
 
 const HighLow52WeekComponent = () => {
     const [data, setData] = useState([]);
@@ -36,9 +39,10 @@ const HighLow52WeekComponent = () => {
                     <td>Symbol</td>
                     <td>52W High</td>
                     <td>52W Low</td>
-                    <td>Previous Close Price</td>
+                    <td>Last Close</td>
                     <td>% From High</td>
                     <td>% From Low</td>
+                    <td>Position</td>
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +58,7 @@ const HighLow52WeekComponent = () => {
                         <td>{it.lastPrice}</td>
                         <td>{it.fromHighPer}</td>
                         <td>{it.fromLowPer}</td>
+                        <td><SliderHighLow52Week data={it} />   </td>
                     </tr>)
                 }
             </tbody>

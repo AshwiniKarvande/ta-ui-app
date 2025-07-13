@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Table from 'react-bootstrap/Table';
 import axiosBaseUrl from './AxiosConfig';
+import DateSlider from './DateSlider';
 
 const SymbolReportComponent = ({symbol, exchange}) => {
   const [data, setData] = useState([]);
@@ -34,12 +35,26 @@ const SymbolReportComponent = ({symbol, exchange}) => {
     }
   }
 
+  const handleDateChange = (dates) => {
+    console.log("Selected dates:", dates);
+    // Process the selected dates (which are now JavaScript Date objects)
+  };
+
   return (
     <div className='container'>
         <h2 className='text-center'>Strategy Report: {symbol}</h2>
         {data.strategyReportList.length === 0 ?
         <div className='text-center'>No data available</div> :
         <div className="row">
+          <div> 
+            <DateSlider
+                minDate={data.metadata.fromDate}
+                maxDate={data.metadata.toDate}
+                fromDate={data.metadata.fromDate}
+                toDate={data.metadata.toDate}
+                onDateChange={handleDateChange}
+            />
+         </div>
           <div className='col-md-6 text-left'><b>From Date:</b>{data.metadata.fromDate} <b>To Date:</b> {data.metadata.toDate}</div>
           <div className='col-md-6 text-right'>From Price: {data.metadata.fromDateClosePrice} To Price: {data.metadata.toDateClosePrice}</div>
         </div>
@@ -67,7 +82,7 @@ const SymbolReportComponent = ({symbol, exchange}) => {
                         <td>{it.freshPositionGain}</td>
                         <td>{it.freshPositionDays}</td>
                         <td style={backgroundColor(it.freshPositionCagr)}>{it.freshPositionCagr}</td>
-                        <td>{it.freshOpenPosUnrealizedReturn === 0.0 ? '-' : it.freshOpenPosUnrealizedReturn}</td>
+                        <td>{it.freshOpenPosUnrealizedReturn === 0.0 ? '-' : it.freshOpenPosUnrealizedReturn + ' From ' + it.freshOpenPosDate}</td>
                     </tr>
                     <tr key={i + '-Avg'}>
                         <td>Avg</td>
@@ -75,7 +90,7 @@ const SymbolReportComponent = ({symbol, exchange}) => {
                         <td>{it.avgPositionGain}</td>
                         <td>{it.avgPositionDays}</td>
                         <td style={backgroundColor(it.avgPositionCagr)}>{it.avgPositionCagr}</td>
-                        <td>{it.avgOpenPosUnrealizedReturn === 0.0 ? '-' : it.avgOpenPosUnrealizedReturn}</td>
+                        <td>{it.avgOpenPosUnrealizedReturn === 0.0 ? '-' : it.avgOpenPosUnrealizedReturn + ' From ' + it.avgOpenPosDate}</td>
                     </tr>
                     </>
                     )
